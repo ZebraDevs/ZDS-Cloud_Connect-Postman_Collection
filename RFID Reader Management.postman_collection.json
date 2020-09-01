@@ -1,0 +1,1325 @@
+{
+	"info": {
+		"_postman_id": "52bf35bb-be68-4ce6-84a8-baff44c9ecd3",
+		"name": "RFID Reader Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Two-Legged Oauth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7abae9fb-bb4d-4da7-be8f-1bc63f116c30",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"bearer_token_user\", \"Bearer \" + data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ae6b4619-61fa-49ee-8afc-9e50ae851cd9",
+						"exec": [
+							"// Verify 'client_id' header is set correctly",
+							"var client_id = pm.globals.get(\"Consumer_Key\");",
+							"if(client_id === undefined) {",
+							"    client_id = pm.environment.get(\"Consumer_Key\"); ",
+							"}",
+							"if(client_id === undefined) {",
+							"    client_id = pm.request.headers.get(\"client_id\");",
+							"}",
+							"if(client_id === \"{{Consumer_Key}}\") {",
+							"    client_id = undefined;",
+							"}",
+							"if(client_id === undefined) { ",
+							"    throw new Error(\"Please set the 'client_id' Header variable\"); ",
+							"}",
+							"",
+							"var client_secret = pm.globals.get(\"Consumer_Secret\");",
+							"if(client_secret === undefined){ ",
+							"    client_secret = pm.environment.get(\"Consumer_Secret\");",
+							"}",
+							"if(client_secret === undefined) {",
+							"    client_secret = pm.request.headers.get(\"client_secret\");",
+							"}",
+							"if(client_secret === \"{{Consumer_Secret}}\") {",
+							"    client_secret = undefined;",
+							"}",
+							"if(client_secret === undefined) { ",
+							"    throw new Error(\"Please set the 'client_secret' Header variable\"); ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client_id",
+						"value": "{{Consumer_Key}}",
+						"description": "Get your Key at: https://developer.zebra.com/apis"
+					},
+					{
+						"key": "client_secret",
+						"value": "{{Consumer_Secret}}",
+						"description": "Get your Secret at https://developer.zebra.com/apis"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/oauth/token/access",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"oauth",
+						"token",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reader",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "874103fa-0b34-4ef5-8e52-751137fd1a13",
+						"exec": [
+							"var apikey = pm.globals.get(\"Consumer_Key\");",
+							"if(apikey === undefined) {",
+							"    apikey = pm.environment.get(\"Consumer_Key\"); ",
+							"}",
+							"if(apikey === undefined) {",
+							"    apikey = pm.request.headers.get(\"apikey\");",
+							"}",
+							"if(apikey === \"{{Consumer_Key}}\") {",
+							"    apikey = undefined;",
+							"}",
+							"",
+							"if(apikey === undefined) {",
+							"    throw new Error(\"Please set the 'apikey' Header variable. This is your Consumer Key on the Developer Portal.\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/aos/assets/class/reader/asset/{{deviceId}}",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"aos",
+						"assets",
+						"class",
+						"reader",
+						"asset",
+						"{{deviceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa795f34-13e8-4418-81da-9af0742e2899",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/status",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Version",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "72529d55-2b15-45e6-a3c4-aa9d261429e8",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/version",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Region",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ed072e7c-656a-4f74-ae13-50507604715e",
+						"exec": [
+							"var baseUrl = pm.environment.get(\"deviceId\");",
+							"if(baseUrl === undefined){",
+							"    console.error(\"Please set the 'deviceId' path parameter.\");",
+							"    throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/region",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"region"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Network",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "066971b2-6a09-47ed-8b78-35b1e0cd7d8d",
+						"exec": [
+							"var baseUrl = pm.environment.get(\"deviceId\");",
+							"if(baseUrl === undefined){",
+							"    console.error(\"Please set the 'deviceId' path parameter.\");",
+							"    throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/network",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"network"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Network",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4508d95e-97ce-41b9-8b07-0e02e21834f3",
+						"exec": [
+							"var baseUrl = pm.environment.get(\"deviceId\");",
+							"if(baseUrl === undefined){",
+							"    console.error(\"Please set the 'deviceId' path parameter.\");",
+							"    throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"macAddress\": \"84:24:8D:F0:F4:B5\",\n  \"dhcp\": \"true\",\n  \"dnsAddress\": \"8.8.8.8\",\n  \"subnetMask\": \"255.255.255.0\",\n  \"gatewayAddress\": \"192.168.1.1\",\n  \"ipAddress\": \"192.168.1.10\",\n  \"hostName\": \"FX9600F0F4B5\"\n}"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/network",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"network"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Mode",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f8c0c88f-aa1b-47b1-a4c5-225694edc494",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/mode",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"mode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Mode",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "39cf45e8-a21b-4714-b7b1-7a56c53833ba",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mode\": \"inventory\",\r\n    \"antennas\": [1,2], \r\n    \"filter\": { }\t\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/mode",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"mode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get App-led",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6d9efc31-2904-4243-8354-312c7863d5e8",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/app-led",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"app-led"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set App-led",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dad1781f-d08c-4e2b-8c63-ff819d901a8b",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"red\",\r\n    \"seconds\": 60,\r\n    \"flash\": true\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/app-led",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"app-led"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Config",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "380fde5c-ed85-4037-98f3-b5d29e64145b",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/config",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Config",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5370087c-5d9c-4af0-8d6c-622bd322779d",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/config",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Gpo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9b599788-75bc-48dd-a301-88b940def1ab",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"port\": 1,\r\n\t\"state\": true\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/gpo",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"gpo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Start",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6f0d7e1f-880a-49bf-9de8-35bca7db6786",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/start",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Stop",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c361c62b-0cef-4e33-9d6a-de1ced7e3b45",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/stop",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Reboot",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "86078589-87a3-45ec-89a3-385ce4e0d4c9",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/reboot",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"reboot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get OS",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2a870580-08f5-4e71-81c4-bdff9d634ae0",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{bearer_token_user}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/os",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"os"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set OS",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4a9c32b9-f198-48a6-8975-d17cfaad1b9d",
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{bearer_token_user}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"version\" : \"3.7.17\"\n}"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/os",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"os"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e1d6bfb1-5743-45a2-bd79-d461b30e8706",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "607cda63-a6a6-4d4b-a640-198f8e0947a2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
