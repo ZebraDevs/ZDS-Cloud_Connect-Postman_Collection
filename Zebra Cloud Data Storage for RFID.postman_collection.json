@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "3e084f83-e67c-4379-a90d-1067d3efecbc",
+		"name": "Zebra Cloud Data Storage for RFID",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tag Read Events",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"type": "text",
+						"value": "{{Consumer_Key}}",
+						"description": "Get your Key at: https://developer.zebra.com/apis"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/data/rfid/tag/read-events?",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"data",
+						"rfid",
+						"tag",
+						"read-events"
+					],
+					"query": [
+						{
+							"key": "dateTime",
+							"value": "2020-09=01T00:00:00.000Z",
+							"description": "Point in time for each RFID tag's last recorded read event ",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Tag Read Events",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"type": "text",
+								"value": "{{Consumer_Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/v2/data/rfid/tag/read-events?dateTime=2020-09=01T00:00:00.000Z",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"v2",
+								"data",
+								"rfid",
+								"tag",
+								"read-events"
+							],
+							"query": [
+								{
+									"key": "dateTime",
+									"value": "2020-09=01T00:00:00.000Z",
+									"description": "Point in time for each RFID tag's last recorded read event (optional)"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n  \"type\": \"RFID-read\",\r\n  \"event\": {\r\n    \"id\": \"6359fcb8-96a0-461c-90b1-07dbb002c063\",\r\n    \"timestamp\": \"2020-01-08T15:36:53+00:00\",\r\n    \"deviceId\": \"RFIDF0F4B5\",\r\n    \"data\": {\r\n      \"format\": \"epc\",\r\n      \"id\": \"E280689400005004CBC0C4F9\",\r\n      \"rssi\": 0.124,\r\n      \"antennaId\": \"1\",\r\n      \"value\": \"0180614141123458216789\",\r\n      \"symbology\": \"code-128\",\r\n      \"action\": \"IN\"\r\n    }\r\n  },\r\n  \"analytics\": {\r\n    \"tenant\": \"string\",\r\n    \"location\": \"Room 1293\",\r\n    \"resource\": \"IV Pump 2349877\",\r\n    \"resourceType\": \"asset\",\r\n    \"eventCategory\": \"read-in\",\r\n    \"meta\": \"string\",\r\n    \"enrichment\": [\r\n      {\r\n        \"source\": \"https://api.zebra.com/v2/tools/barcode/lookup\",\r\n        \"data\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"decode\": {\r\n    \"gs1\": {\r\n      \"humanReadable\": \"string\",\r\n      \"elementString\": \"string\",\r\n      \"companyPrefix\": \"string\",\r\n      \"components\": {\r\n        \"sscc\": 0,\r\n        \"gtin\": 0,\r\n        \"content\": 0,\r\n        \"batchLot\": \"string\",\r\n        \"prodDate\": 0,\r\n        \"dueDate\": 0,\r\n        \"packDate\": 0,\r\n        \"bestBeforeOrSellBy\": 0,\r\n        \"sellBy\": 0,\r\n        \"useByOrExpiry\": 0,\r\n        \"variant\": 0,\r\n        \"serial\": \"string\",\r\n        \"cpv\": \"string\",\r\n        \"tpx\": 0,\r\n        \"additionalId\": \"string\",\r\n        \"custPartNo\": \"string\",\r\n        \"varNumber\": 0,\r\n        \"pcn\": \"string\",\r\n        \"secondarySerial\": \"string\",\r\n        \"refToSource\": \"string\",\r\n        \"docId\": \"string\",\r\n        \"glnExt\": 0,\r\n        \"gcn\": 0,\r\n        \"varCount\": 0,\r\n        \"netWeightKgTrd\": 0,\r\n        \"lengthMTrd\": 0,\r\n        \"widthMTrd\": 0,\r\n        \"heightMTrd\": 0,\r\n        \"areaM2Trd\": 0,\r\n        \"netVolumeLTrd\": 0,\r\n        \"netVolumeM3Trd\": 0,\r\n        \"netWeightLbTrd\": 0,\r\n        \"lengthInTrd\": 0,\r\n        \"lengthFtTrd\": 0,\r\n        \"lengthYdsTrd\": 0,\r\n        \"widthInTrd\": 0,\r\n        \"widthFtTrd\": 0,\r\n        \"widthYdsTrd\": 0,\r\n        \"heightInTrd\": 0,\r\n        \"heightFtTrd\": 0,\r\n        \"heightYdsTrd\": 0,\r\n        \"grossWeightLbsLog\": 0,\r\n        \"lengthM\": 0,\r\n        \"widthM\": 0,\r\n        \"heightM\": 0,\r\n        \"areaM2\": 0,\r\n        \"volumeL\": 0,\r\n        \"volumeM3\": 0,\r\n        \"kgPerM2\": 0,\r\n        \"grossWeightKgLog\": 0,\r\n        \"lengthIn\": 0,\r\n        \"lengthFt\": 0,\r\n        \"lengthYds\": 0,\r\n        \"widthIn\": 0,\r\n        \"widthFt\": 0,\r\n        \"widthYds\": 0,\r\n        \"heightIn\": 0,\r\n        \"heightFt\": 0,\r\n        \"heightYds\": 0,\r\n        \"areaIn2Trd\": 0,\r\n        \"areaFt2Trd\": 0,\r\n        \"areaYds2Trd\": 0,\r\n        \"areaIn2Log\": 0,\r\n        \"areaFt2Log\": 0,\r\n        \"areaYds2Log\": 0,\r\n        \"netWeightTTrd\": 0,\r\n        \"netVolumeOzTrd\": 0,\r\n        \"netVolumeQtsTrd\": 0,\r\n        \"netVolumeGalsTrd\": 0,\r\n        \"volumeQtsLog\": 0,\r\n        \"volumeGalsLog\": 0,\r\n        \"volumeIn3Trd\": 0,\r\n        \"volumeFt3Trd\": 0,\r\n        \"volumeYds3Trd\": 0,\r\n        \"volumeIn3Log\": 0,\r\n        \"volumeFt3Log\": 0,\r\n        \"volumeYds3Log\": 0,\r\n        \"count\": 0,\r\n        \"amountPayOrCpn\": 0,\r\n        \"amountPayPlusCurr\": 0,\r\n        \"priceVarTrd\": 0,\r\n        \"priceVarTrdPlusCurr\": 0,\r\n        \"pctOff\": 0,\r\n        \"orderNumber\": \"string\",\r\n        \"ginc\": \"string\",\r\n        \"gsin\": 0,\r\n        \"route\": \"string\",\r\n        \"shipToLoc\": 0,\r\n        \"billTo\": 0,\r\n        \"purchaseFrom\": 0,\r\n        \"shipForLoc\": 0,\r\n        \"glnLocNo\": 0,\r\n        \"glnPayTo\": 0,\r\n        \"prodServLoc\": 0,\r\n        \"pgln\": 0,\r\n        \"shipToPost\": 0,\r\n        \"shipToPostPlusCountry\": 0,\r\n        \"origin\": 0,\r\n        \"countryInitProcess\": 0,\r\n        \"countryProcess\": 0,\r\n        \"countryDisassembly\": 0,\r\n        \"countryFullProcess\": 0,\r\n        \"originSubdivision\": \"string\",\r\n        \"nsn\": 0,\r\n        \"meatCut\": \"string\",\r\n        \"expiryDateTime\": 0,\r\n        \"activePotency\": 0,\r\n        \"catchArea\": \"string\",\r\n        \"firstFreezeDate\": 0,\r\n        \"harvestDate\": \"string\",\r\n        \"acquaticSpecies\": \"string\",\r\n        \"fishingGearType\": \"string\",\r\n        \"prodMethod\": \"string\",\r\n        \"refurbLot\": \"string\",\r\n        \"funcStat\": \"string\",\r\n        \"revStat\": \"string\",\r\n        \"giaiAssembly\": \"string\",\r\n        \"processorNum0\": \"string\",\r\n        \"processorNum1\": \"string\",\r\n        \"processorNum2\": \"string\",\r\n        \"processorNum3\": \"string\",\r\n        \"processorNum4\": \"string\",\r\n        \"processorNum5\": \"string\",\r\n        \"processorNum6\": \"string\",\r\n        \"processorNum7\": \"string\",\r\n        \"processorNum8\": \"string\",\r\n        \"processorNum9\": \"string\",\r\n        \"uic\": \"string\",\r\n        \"nhrnPzn\": \"string\",\r\n        \"nhrnCip\": \"string\",\r\n        \"nhrnCn\": \"string\",\r\n        \"nhrnDrn\": \"string\",\r\n        \"nhrhAim\": 0,\r\n        \"protocol\": \"string\",\r\n        \"dimensions\": 0,\r\n        \"cmtNo\": \"string\",\r\n        \"grai\": \"string\",\r\n        \"giai\": \"string\",\r\n        \"pricePerUnit\": 0,\r\n        \"gctin\": 0,\r\n        \"iban\": \"string\",\r\n        \"prodTime\": 0,\r\n        \"cpid\": \"string\",\r\n        \"cpidSerial\": 0,\r\n        \"version\": \"string\",\r\n        \"gmn\": 0,\r\n        \"gsrnProvider\": 0,\r\n        \"gsrnRecipient\": 0,\r\n        \"srin\": 0,\r\n        \"payRefNo\": 0,\r\n        \"itipContent\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCode\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCodePlusEndOfOfferCode\": 0,\r\n        \"128CouponExtCodeNsc\": 0,\r\n        \"couponCodeId\": \"string\",\r\n        \"points\": 0,\r\n        \"paperlessCouponCodeId\": 0,\r\n        \"productUrl\": \"string\",\r\n        \"internal\": \"string\",\r\n        \"internal1\": \"string\",\r\n        \"internal2\": \"string\",\r\n        \"internal3\": \"string\",\r\n        \"internal4\": \"string\",\r\n        \"internal5\": \"string\",\r\n        \"internal6\": \"string\",\r\n        \"internal7\": \"string\",\r\n        \"internal8\": \"string\",\r\n        \"internal9\": \"string\"\r\n      },\r\n      \"unknown\": 0\r\n    },\r\n    \"epc\": {\r\n      \"version\": \"1.0\",\r\n      \"tag\": {\r\n        \"epcHex\": \"string\",\r\n        \"tagUri\": \"string\",\r\n        \"rawUri\": \"string\",\r\n        \"epcTagScheme\": \"string\"\r\n      },\r\n      \"epc\": {\r\n        \"epcUri\": \"string\",\r\n        \"epcScheme\": \"string\",\r\n        \"epcComponents\": \"string\"\r\n      }\r\n    },\r\n    \"iso\": {\r\n      \"tbd\": \"string\"\r\n    }\r\n  }\r\n}\r\nNo links\r\n401\t\r\nUnauthorized\r\n\r\nMedia type"
+				},
+				{
+					"name": "Tag Read Events",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"type": "text",
+								"value": "{{Consumer_Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.zebra.com/v2/data/rfid/tag/read-events?dateTime=2020-09=01T00:00:00.000Z",
+							"protocol": "https",
+							"host": [
+								"api",
+								"zebra",
+								"com"
+							],
+							"path": [
+								"v2",
+								"data",
+								"rfid",
+								"tag",
+								"read-events"
+							],
+							"query": [
+								{
+									"key": "dateTime",
+									"value": "2020-09=01T00:00:00.000Z",
+									"description": "(optional)"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n  \"type\": \"RFID-read\",\r\n  \"event\": {\r\n    \"id\": \"6359fcb8-96a0-461c-90b1-07dbb002c063\",\r\n    \"timestamp\": \"2020-01-08T15:36:53+00:00\",\r\n    \"deviceId\": \"RFIDF0F4B5\",\r\n    \"data\": {\r\n      \"format\": \"epc\",\r\n      \"id\": \"E280689400005004CBC0C4F9\",\r\n      \"rssi\": 0.124,\r\n      \"antennaId\": \"1\",\r\n      \"value\": \"0180614141123458216789\",\r\n      \"symbology\": \"code-128\",\r\n      \"action\": \"IN\"\r\n    }\r\n  },\r\n  \"analytics\": {\r\n    \"tenant\": \"string\",\r\n    \"location\": \"Room 1293\",\r\n    \"resource\": \"IV Pump 2349877\",\r\n    \"resourceType\": \"asset\",\r\n    \"eventCategory\": \"read-in\",\r\n    \"meta\": \"string\",\r\n    \"enrichment\": [\r\n      {\r\n        \"source\": \"https://api.zebra.com/v2/tools/barcode/lookup\",\r\n        \"data\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"decode\": {\r\n    \"gs1\": {\r\n      \"humanReadable\": \"string\",\r\n      \"elementString\": \"string\",\r\n      \"companyPrefix\": \"string\",\r\n      \"components\": {\r\n        \"sscc\": 0,\r\n        \"gtin\": 0,\r\n        \"content\": 0,\r\n        \"batchLot\": \"string\",\r\n        \"prodDate\": 0,\r\n        \"dueDate\": 0,\r\n        \"packDate\": 0,\r\n        \"bestBeforeOrSellBy\": 0,\r\n        \"sellBy\": 0,\r\n        \"useByOrExpiry\": 0,\r\n        \"variant\": 0,\r\n        \"serial\": \"string\",\r\n        \"cpv\": \"string\",\r\n        \"tpx\": 0,\r\n        \"additionalId\": \"string\",\r\n        \"custPartNo\": \"string\",\r\n        \"varNumber\": 0,\r\n        \"pcn\": \"string\",\r\n        \"secondarySerial\": \"string\",\r\n        \"refToSource\": \"string\",\r\n        \"docId\": \"string\",\r\n        \"glnExt\": 0,\r\n        \"gcn\": 0,\r\n        \"varCount\": 0,\r\n        \"netWeightKgTrd\": 0,\r\n        \"lengthMTrd\": 0,\r\n        \"widthMTrd\": 0,\r\n        \"heightMTrd\": 0,\r\n        \"areaM2Trd\": 0,\r\n        \"netVolumeLTrd\": 0,\r\n        \"netVolumeM3Trd\": 0,\r\n        \"netWeightLbTrd\": 0,\r\n        \"lengthInTrd\": 0,\r\n        \"lengthFtTrd\": 0,\r\n        \"lengthYdsTrd\": 0,\r\n        \"widthInTrd\": 0,\r\n        \"widthFtTrd\": 0,\r\n        \"widthYdsTrd\": 0,\r\n        \"heightInTrd\": 0,\r\n        \"heightFtTrd\": 0,\r\n        \"heightYdsTrd\": 0,\r\n        \"grossWeightLbsLog\": 0,\r\n        \"lengthM\": 0,\r\n        \"widthM\": 0,\r\n        \"heightM\": 0,\r\n        \"areaM2\": 0,\r\n        \"volumeL\": 0,\r\n        \"volumeM3\": 0,\r\n        \"kgPerM2\": 0,\r\n        \"grossWeightKgLog\": 0,\r\n        \"lengthIn\": 0,\r\n        \"lengthFt\": 0,\r\n        \"lengthYds\": 0,\r\n        \"widthIn\": 0,\r\n        \"widthFt\": 0,\r\n        \"widthYds\": 0,\r\n        \"heightIn\": 0,\r\n        \"heightFt\": 0,\r\n        \"heightYds\": 0,\r\n        \"areaIn2Trd\": 0,\r\n        \"areaFt2Trd\": 0,\r\n        \"areaYds2Trd\": 0,\r\n        \"areaIn2Log\": 0,\r\n        \"areaFt2Log\": 0,\r\n        \"areaYds2Log\": 0,\r\n        \"netWeightTTrd\": 0,\r\n        \"netVolumeOzTrd\": 0,\r\n        \"netVolumeQtsTrd\": 0,\r\n        \"netVolumeGalsTrd\": 0,\r\n        \"volumeQtsLog\": 0,\r\n        \"volumeGalsLog\": 0,\r\n        \"volumeIn3Trd\": 0,\r\n        \"volumeFt3Trd\": 0,\r\n        \"volumeYds3Trd\": 0,\r\n        \"volumeIn3Log\": 0,\r\n        \"volumeFt3Log\": 0,\r\n        \"volumeYds3Log\": 0,\r\n        \"count\": 0,\r\n        \"amountPayOrCpn\": 0,\r\n        \"amountPayPlusCurr\": 0,\r\n        \"priceVarTrd\": 0,\r\n        \"priceVarTrdPlusCurr\": 0,\r\n        \"pctOff\": 0,\r\n        \"orderNumber\": \"string\",\r\n        \"ginc\": \"string\",\r\n        \"gsin\": 0,\r\n        \"route\": \"string\",\r\n        \"shipToLoc\": 0,\r\n        \"billTo\": 0,\r\n        \"purchaseFrom\": 0,\r\n        \"shipForLoc\": 0,\r\n        \"glnLocNo\": 0,\r\n        \"glnPayTo\": 0,\r\n        \"prodServLoc\": 0,\r\n        \"pgln\": 0,\r\n        \"shipToPost\": 0,\r\n        \"shipToPostPlusCountry\": 0,\r\n        \"origin\": 0,\r\n        \"countryInitProcess\": 0,\r\n        \"countryProcess\": 0,\r\n        \"countryDisassembly\": 0,\r\n        \"countryFullProcess\": 0,\r\n        \"originSubdivision\": \"string\",\r\n        \"nsn\": 0,\r\n        \"meatCut\": \"string\",\r\n        \"expiryDateTime\": 0,\r\n        \"activePotency\": 0,\r\n        \"catchArea\": \"string\",\r\n        \"firstFreezeDate\": 0,\r\n        \"harvestDate\": \"string\",\r\n        \"acquaticSpecies\": \"string\",\r\n        \"fishingGearType\": \"string\",\r\n        \"prodMethod\": \"string\",\r\n        \"refurbLot\": \"string\",\r\n        \"funcStat\": \"string\",\r\n        \"revStat\": \"string\",\r\n        \"giaiAssembly\": \"string\",\r\n        \"processorNum0\": \"string\",\r\n        \"processorNum1\": \"string\",\r\n        \"processorNum2\": \"string\",\r\n        \"processorNum3\": \"string\",\r\n        \"processorNum4\": \"string\",\r\n        \"processorNum5\": \"string\",\r\n        \"processorNum6\": \"string\",\r\n        \"processorNum7\": \"string\",\r\n        \"processorNum8\": \"string\",\r\n        \"processorNum9\": \"string\",\r\n        \"uic\": \"string\",\r\n        \"nhrnPzn\": \"string\",\r\n        \"nhrnCip\": \"string\",\r\n        \"nhrnCn\": \"string\",\r\n        \"nhrnDrn\": \"string\",\r\n        \"nhrhAim\": 0,\r\n        \"protocol\": \"string\",\r\n        \"dimensions\": 0,\r\n        \"cmtNo\": \"string\",\r\n        \"grai\": \"string\",\r\n        \"giai\": \"string\",\r\n        \"pricePerUnit\": 0,\r\n        \"gctin\": 0,\r\n        \"iban\": \"string\",\r\n        \"prodTime\": 0,\r\n        \"cpid\": \"string\",\r\n        \"cpidSerial\": 0,\r\n        \"version\": \"string\",\r\n        \"gmn\": 0,\r\n        \"gsrnProvider\": 0,\r\n        \"gsrnRecipient\": 0,\r\n        \"srin\": 0,\r\n        \"payRefNo\": 0,\r\n        \"itipContent\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCode\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCodePlusEndOfOfferCode\": 0,\r\n        \"128CouponExtCodeNsc\": 0,\r\n        \"couponCodeId\": \"string\",\r\n        \"points\": 0,\r\n        \"paperlessCouponCodeId\": 0,\r\n        \"productUrl\": \"string\",\r\n        \"internal\": \"string\",\r\n        \"internal1\": \"string\",\r\n        \"internal2\": \"string\",\r\n        \"internal3\": \"string\",\r\n        \"internal4\": \"string\",\r\n        \"internal5\": \"string\",\r\n        \"internal6\": \"string\",\r\n        \"internal7\": \"string\",\r\n        \"internal8\": \"string\",\r\n        \"internal9\": \"string\"\r\n      },\r\n      \"unknown\": 0\r\n    },\r\n    \"epc\": {\r\n      \"version\": \"1.0\",\r\n      \"tag\": {\r\n        \"epcHex\": \"string\",\r\n        \"tagUri\": \"string\",\r\n        \"rawUri\": \"string\",\r\n        \"epcTagScheme\": \"string\"\r\n      },\r\n      \"epc\": {\r\n        \"epcUri\": \"string\",\r\n        \"epcScheme\": \"string\",\r\n        \"epcComponents\": \"string\"\r\n      }\r\n    },\r\n    \"iso\": {\r\n      \"tbd\": \"string\"\r\n    }\r\n  }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Tag Read Events by EPC",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "678b68b0-d4e9-4d78-82ad-cea47d73f45a",
+						"exec": [
+							"//TODO optional uncomment line below to set epcHex variable ",
+							"//postman.setEnvironmentVariable(\"epcHex\",\"000000000000000000000000\")",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"type": "text",
+						"value": "{{Consumer_Key}}",
+						"description": "Get your Key at: https://developer.zebra.com/apis",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/data/rfid/tag/read-events/{{epcHex}}?",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"data",
+						"rfid",
+						"tag",
+						"read-events",
+						"{{epcHex}}"
+					],
+					"query": [
+						{
+							"key": "startTime",
+							"value": "2020-09-01T00:00:00.000Z",
+							"description": "Timestamp of records newer than the time provided ",
+							"disabled": true
+						},
+						{
+							"key": "endTime",
+							"value": "2020-12-31T23:59:59.000Z",
+							"description": "Timestamp of records not occurring before the time provided ",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Tag Read Events by EPC",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"type": "text",
+								"value": "{{Consumer_Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.zebra.com/v2/data/rfid/tag/read-events/{{epcHex}}?startTime=2020-09-01T00:00:00.000Z&endTime=2020-12-31T23:59:59.000Z",
+							"protocol": "https",
+							"host": [
+								"api",
+								"zebra",
+								"com"
+							],
+							"path": [
+								"v2",
+								"data",
+								"rfid",
+								"tag",
+								"read-events",
+								"{{epcHex}}"
+							],
+							"query": [
+								{
+									"key": "startTime",
+									"value": "2020-09-01T00:00:00.000Z",
+									"description": "Timestamp of records newer than the time provided (optional)"
+								},
+								{
+									"key": "endTime",
+									"value": "2020-12-31T23:59:59.000Z",
+									"description": "Timestamp of records not occurring before the time provided (optional)"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n  \"type\": \"RFID-read\",\r\n  \"event\": {\r\n    \"id\": \"6359fcb8-96a0-461c-90b1-07dbb002c063\",\r\n    \"timestamp\": \"2020-01-08T15:36:53+00:00\",\r\n    \"deviceId\": \"RFIDF0F4B5\",\r\n    \"data\": {\r\n      \"format\": \"epc\",\r\n      \"id\": \"E280689400005004CBC0C4F9\",\r\n      \"rssi\": 0.124,\r\n      \"antennaId\": \"1\",\r\n      \"value\": \"0180614141123458216789\",\r\n      \"symbology\": \"code-128\",\r\n      \"action\": \"IN\"\r\n    }\r\n  },\r\n  \"analytics\": {\r\n    \"tenant\": \"string\",\r\n    \"location\": \"Room 1293\",\r\n    \"resource\": \"IV Pump 2349877\",\r\n    \"resourceType\": \"asset\",\r\n    \"eventCategory\": \"read-in\",\r\n    \"meta\": \"string\",\r\n    \"enrichment\": [\r\n      {\r\n        \"source\": \"https://api.zebra.com/v2/tools/barcode/lookup\",\r\n        \"data\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"decode\": {\r\n    \"gs1\": {\r\n      \"humanReadable\": \"string\",\r\n      \"elementString\": \"string\",\r\n      \"companyPrefix\": \"string\",\r\n      \"components\": {\r\n        \"sscc\": 0,\r\n        \"gtin\": 0,\r\n        \"content\": 0,\r\n        \"batchLot\": \"string\",\r\n        \"prodDate\": 0,\r\n        \"dueDate\": 0,\r\n        \"packDate\": 0,\r\n        \"bestBeforeOrSellBy\": 0,\r\n        \"sellBy\": 0,\r\n        \"useByOrExpiry\": 0,\r\n        \"variant\": 0,\r\n        \"serial\": \"string\",\r\n        \"cpv\": \"string\",\r\n        \"tpx\": 0,\r\n        \"additionalId\": \"string\",\r\n        \"custPartNo\": \"string\",\r\n        \"varNumber\": 0,\r\n        \"pcn\": \"string\",\r\n        \"secondarySerial\": \"string\",\r\n        \"refToSource\": \"string\",\r\n        \"docId\": \"string\",\r\n        \"glnExt\": 0,\r\n        \"gcn\": 0,\r\n        \"varCount\": 0,\r\n        \"netWeightKgTrd\": 0,\r\n        \"lengthMTrd\": 0,\r\n        \"widthMTrd\": 0,\r\n        \"heightMTrd\": 0,\r\n        \"areaM2Trd\": 0,\r\n        \"netVolumeLTrd\": 0,\r\n        \"netVolumeM3Trd\": 0,\r\n        \"netWeightLbTrd\": 0,\r\n        \"lengthInTrd\": 0,\r\n        \"lengthFtTrd\": 0,\r\n        \"lengthYdsTrd\": 0,\r\n        \"widthInTrd\": 0,\r\n        \"widthFtTrd\": 0,\r\n        \"widthYdsTrd\": 0,\r\n        \"heightInTrd\": 0,\r\n        \"heightFtTrd\": 0,\r\n        \"heightYdsTrd\": 0,\r\n        \"grossWeightLbsLog\": 0,\r\n        \"lengthM\": 0,\r\n        \"widthM\": 0,\r\n        \"heightM\": 0,\r\n        \"areaM2\": 0,\r\n        \"volumeL\": 0,\r\n        \"volumeM3\": 0,\r\n        \"kgPerM2\": 0,\r\n        \"grossWeightKgLog\": 0,\r\n        \"lengthIn\": 0,\r\n        \"lengthFt\": 0,\r\n        \"lengthYds\": 0,\r\n        \"widthIn\": 0,\r\n        \"widthFt\": 0,\r\n        \"widthYds\": 0,\r\n        \"heightIn\": 0,\r\n        \"heightFt\": 0,\r\n        \"heightYds\": 0,\r\n        \"areaIn2Trd\": 0,\r\n        \"areaFt2Trd\": 0,\r\n        \"areaYds2Trd\": 0,\r\n        \"areaIn2Log\": 0,\r\n        \"areaFt2Log\": 0,\r\n        \"areaYds2Log\": 0,\r\n        \"netWeightTTrd\": 0,\r\n        \"netVolumeOzTrd\": 0,\r\n        \"netVolumeQtsTrd\": 0,\r\n        \"netVolumeGalsTrd\": 0,\r\n        \"volumeQtsLog\": 0,\r\n        \"volumeGalsLog\": 0,\r\n        \"volumeIn3Trd\": 0,\r\n        \"volumeFt3Trd\": 0,\r\n        \"volumeYds3Trd\": 0,\r\n        \"volumeIn3Log\": 0,\r\n        \"volumeFt3Log\": 0,\r\n        \"volumeYds3Log\": 0,\r\n        \"count\": 0,\r\n        \"amountPayOrCpn\": 0,\r\n        \"amountPayPlusCurr\": 0,\r\n        \"priceVarTrd\": 0,\r\n        \"priceVarTrdPlusCurr\": 0,\r\n        \"pctOff\": 0,\r\n        \"orderNumber\": \"string\",\r\n        \"ginc\": \"string\",\r\n        \"gsin\": 0,\r\n        \"route\": \"string\",\r\n        \"shipToLoc\": 0,\r\n        \"billTo\": 0,\r\n        \"purchaseFrom\": 0,\r\n        \"shipForLoc\": 0,\r\n        \"glnLocNo\": 0,\r\n        \"glnPayTo\": 0,\r\n        \"prodServLoc\": 0,\r\n        \"pgln\": 0,\r\n        \"shipToPost\": 0,\r\n        \"shipToPostPlusCountry\": 0,\r\n        \"origin\": 0,\r\n        \"countryInitProcess\": 0,\r\n        \"countryProcess\": 0,\r\n        \"countryDisassembly\": 0,\r\n        \"countryFullProcess\": 0,\r\n        \"originSubdivision\": \"string\",\r\n        \"nsn\": 0,\r\n        \"meatCut\": \"string\",\r\n        \"expiryDateTime\": 0,\r\n        \"activePotency\": 0,\r\n        \"catchArea\": \"string\",\r\n        \"firstFreezeDate\": 0,\r\n        \"harvestDate\": \"string\",\r\n        \"acquaticSpecies\": \"string\",\r\n        \"fishingGearType\": \"string\",\r\n        \"prodMethod\": \"string\",\r\n        \"refurbLot\": \"string\",\r\n        \"funcStat\": \"string\",\r\n        \"revStat\": \"string\",\r\n        \"giaiAssembly\": \"string\",\r\n        \"processorNum0\": \"string\",\r\n        \"processorNum1\": \"string\",\r\n        \"processorNum2\": \"string\",\r\n        \"processorNum3\": \"string\",\r\n        \"processorNum4\": \"string\",\r\n        \"processorNum5\": \"string\",\r\n        \"processorNum6\": \"string\",\r\n        \"processorNum7\": \"string\",\r\n        \"processorNum8\": \"string\",\r\n        \"processorNum9\": \"string\",\r\n        \"uic\": \"string\",\r\n        \"nhrnPzn\": \"string\",\r\n        \"nhrnCip\": \"string\",\r\n        \"nhrnCn\": \"string\",\r\n        \"nhrnDrn\": \"string\",\r\n        \"nhrhAim\": 0,\r\n        \"protocol\": \"string\",\r\n        \"dimensions\": 0,\r\n        \"cmtNo\": \"string\",\r\n        \"grai\": \"string\",\r\n        \"giai\": \"string\",\r\n        \"pricePerUnit\": 0,\r\n        \"gctin\": 0,\r\n        \"iban\": \"string\",\r\n        \"prodTime\": 0,\r\n        \"cpid\": \"string\",\r\n        \"cpidSerial\": 0,\r\n        \"version\": \"string\",\r\n        \"gmn\": 0,\r\n        \"gsrnProvider\": 0,\r\n        \"gsrnRecipient\": 0,\r\n        \"srin\": 0,\r\n        \"payRefNo\": 0,\r\n        \"itipContent\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCode\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCodePlusEndOfOfferCode\": 0,\r\n        \"128CouponExtCodeNsc\": 0,\r\n        \"couponCodeId\": \"string\",\r\n        \"points\": 0,\r\n        \"paperlessCouponCodeId\": 0,\r\n        \"productUrl\": \"string\",\r\n        \"internal\": \"string\",\r\n        \"internal1\": \"string\",\r\n        \"internal2\": \"string\",\r\n        \"internal3\": \"string\",\r\n        \"internal4\": \"string\",\r\n        \"internal5\": \"string\",\r\n        \"internal6\": \"string\",\r\n        \"internal7\": \"string\",\r\n        \"internal8\": \"string\",\r\n        \"internal9\": \"string\"\r\n      },\r\n      \"unknown\": 0\r\n    },\r\n    \"epc\": {\r\n      \"version\": \"1.0\",\r\n      \"tag\": {\r\n        \"epcHex\": \"string\",\r\n        \"tagUri\": \"string\",\r\n        \"rawUri\": \"string\",\r\n        \"epcTagScheme\": \"string\"\r\n      },\r\n      \"epc\": {\r\n        \"epcUri\": \"string\",\r\n        \"epcScheme\": \"string\",\r\n        \"epcComponents\": \"string\"\r\n      }\r\n    },\r\n    \"iso\": {\r\n      \"tbd\": \"string\"\r\n    }\r\n  }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Tag Read Events by Reader",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3330ddb0-55aa-4f58-bc7a-ec88eb59ce80",
+						"exec": [
+							"//TODO optional uncomment line below to set readerId variable ",
+							"//postman.setEnvironmentVariable(\"readerId\",\"FX9600AABBCC\")",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"type": "text",
+						"value": "{{Consumer_Key}}",
+						"description": "Get your Key at: https://developer.zebra.com/apis"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/data/rfid/reader/{{readerId}}/tags-present?",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"data",
+						"rfid",
+						"reader",
+						"{{readerId}}",
+						"tags-present"
+					],
+					"query": [
+						{
+							"key": "dateTime",
+							"value": "2020-09-01T00:00:00.000Z",
+							"description": "Tag reads last recorded by the FX Reader at or before this point in time ",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Tag Read Events by Reader",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"type": "text",
+								"value": "vD8Ou23MzEpzRJXX8vN8eYcTw9lXN0Zb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.zebra.com/v2/data/rfid/reader/{{deviceId}}/tags-present?dateTime=2020-09-01T00:00:00.000Z",
+							"protocol": "https",
+							"host": [
+								"api",
+								"zebra",
+								"com"
+							],
+							"path": [
+								"v2",
+								"data",
+								"rfid",
+								"reader",
+								"{{deviceId}}",
+								"tags-present"
+							],
+							"query": [
+								{
+									"key": "dateTime",
+									"value": "2020-09-01T00:00:00.000Z",
+									"description": "Tags reads last recorded by the FX Reader at or before this point in time (optional)"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n  \"type\": \"RFID-read\",\r\n  \"event\": {\r\n    \"id\": \"6359fcb8-96a0-461c-90b1-07dbb002c063\",\r\n    \"timestamp\": \"2020-01-08T15:36:53+00:00\",\r\n    \"deviceId\": \"RFIDF0F4B5\",\r\n    \"data\": {\r\n      \"format\": \"epc\",\r\n      \"id\": \"E280689400005004CBC0C4F9\",\r\n      \"rssi\": 0.124,\r\n      \"antennaId\": \"1\",\r\n      \"value\": \"0180614141123458216789\",\r\n      \"symbology\": \"code-128\",\r\n      \"action\": \"IN\"\r\n    }\r\n  },\r\n  \"analytics\": {\r\n    \"tenant\": \"string\",\r\n    \"location\": \"Room 1293\",\r\n    \"resource\": \"IV Pump 2349877\",\r\n    \"resourceType\": \"asset\",\r\n    \"eventCategory\": \"read-in\",\r\n    \"meta\": \"string\",\r\n    \"enrichment\": [\r\n      {\r\n        \"source\": \"https://api.zebra.com/v2/tools/barcode/lookup\",\r\n        \"data\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"decode\": {\r\n    \"gs1\": {\r\n      \"humanReadable\": \"string\",\r\n      \"elementString\": \"string\",\r\n      \"companyPrefix\": \"string\",\r\n      \"components\": {\r\n        \"sscc\": 0,\r\n        \"gtin\": 0,\r\n        \"content\": 0,\r\n        \"batchLot\": \"string\",\r\n        \"prodDate\": 0,\r\n        \"dueDate\": 0,\r\n        \"packDate\": 0,\r\n        \"bestBeforeOrSellBy\": 0,\r\n        \"sellBy\": 0,\r\n        \"useByOrExpiry\": 0,\r\n        \"variant\": 0,\r\n        \"serial\": \"string\",\r\n        \"cpv\": \"string\",\r\n        \"tpx\": 0,\r\n        \"additionalId\": \"string\",\r\n        \"custPartNo\": \"string\",\r\n        \"varNumber\": 0,\r\n        \"pcn\": \"string\",\r\n        \"secondarySerial\": \"string\",\r\n        \"refToSource\": \"string\",\r\n        \"docId\": \"string\",\r\n        \"glnExt\": 0,\r\n        \"gcn\": 0,\r\n        \"varCount\": 0,\r\n        \"netWeightKgTrd\": 0,\r\n        \"lengthMTrd\": 0,\r\n        \"widthMTrd\": 0,\r\n        \"heightMTrd\": 0,\r\n        \"areaM2Trd\": 0,\r\n        \"netVolumeLTrd\": 0,\r\n        \"netVolumeM3Trd\": 0,\r\n        \"netWeightLbTrd\": 0,\r\n        \"lengthInTrd\": 0,\r\n        \"lengthFtTrd\": 0,\r\n        \"lengthYdsTrd\": 0,\r\n        \"widthInTrd\": 0,\r\n        \"widthFtTrd\": 0,\r\n        \"widthYdsTrd\": 0,\r\n        \"heightInTrd\": 0,\r\n        \"heightFtTrd\": 0,\r\n        \"heightYdsTrd\": 0,\r\n        \"grossWeightLbsLog\": 0,\r\n        \"lengthM\": 0,\r\n        \"widthM\": 0,\r\n        \"heightM\": 0,\r\n        \"areaM2\": 0,\r\n        \"volumeL\": 0,\r\n        \"volumeM3\": 0,\r\n        \"kgPerM2\": 0,\r\n        \"grossWeightKgLog\": 0,\r\n        \"lengthIn\": 0,\r\n        \"lengthFt\": 0,\r\n        \"lengthYds\": 0,\r\n        \"widthIn\": 0,\r\n        \"widthFt\": 0,\r\n        \"widthYds\": 0,\r\n        \"heightIn\": 0,\r\n        \"heightFt\": 0,\r\n        \"heightYds\": 0,\r\n        \"areaIn2Trd\": 0,\r\n        \"areaFt2Trd\": 0,\r\n        \"areaYds2Trd\": 0,\r\n        \"areaIn2Log\": 0,\r\n        \"areaFt2Log\": 0,\r\n        \"areaYds2Log\": 0,\r\n        \"netWeightTTrd\": 0,\r\n        \"netVolumeOzTrd\": 0,\r\n        \"netVolumeQtsTrd\": 0,\r\n        \"netVolumeGalsTrd\": 0,\r\n        \"volumeQtsLog\": 0,\r\n        \"volumeGalsLog\": 0,\r\n        \"volumeIn3Trd\": 0,\r\n        \"volumeFt3Trd\": 0,\r\n        \"volumeYds3Trd\": 0,\r\n        \"volumeIn3Log\": 0,\r\n        \"volumeFt3Log\": 0,\r\n        \"volumeYds3Log\": 0,\r\n        \"count\": 0,\r\n        \"amountPayOrCpn\": 0,\r\n        \"amountPayPlusCurr\": 0,\r\n        \"priceVarTrd\": 0,\r\n        \"priceVarTrdPlusCurr\": 0,\r\n        \"pctOff\": 0,\r\n        \"orderNumber\": \"string\",\r\n        \"ginc\": \"string\",\r\n        \"gsin\": 0,\r\n        \"route\": \"string\",\r\n        \"shipToLoc\": 0,\r\n        \"billTo\": 0,\r\n        \"purchaseFrom\": 0,\r\n        \"shipForLoc\": 0,\r\n        \"glnLocNo\": 0,\r\n        \"glnPayTo\": 0,\r\n        \"prodServLoc\": 0,\r\n        \"pgln\": 0,\r\n        \"shipToPost\": 0,\r\n        \"shipToPostPlusCountry\": 0,\r\n        \"origin\": 0,\r\n        \"countryInitProcess\": 0,\r\n        \"countryProcess\": 0,\r\n        \"countryDisassembly\": 0,\r\n        \"countryFullProcess\": 0,\r\n        \"originSubdivision\": \"string\",\r\n        \"nsn\": 0,\r\n        \"meatCut\": \"string\",\r\n        \"expiryDateTime\": 0,\r\n        \"activePotency\": 0,\r\n        \"catchArea\": \"string\",\r\n        \"firstFreezeDate\": 0,\r\n        \"harvestDate\": \"string\",\r\n        \"acquaticSpecies\": \"string\",\r\n        \"fishingGearType\": \"string\",\r\n        \"prodMethod\": \"string\",\r\n        \"refurbLot\": \"string\",\r\n        \"funcStat\": \"string\",\r\n        \"revStat\": \"string\",\r\n        \"giaiAssembly\": \"string\",\r\n        \"processorNum0\": \"string\",\r\n        \"processorNum1\": \"string\",\r\n        \"processorNum2\": \"string\",\r\n        \"processorNum3\": \"string\",\r\n        \"processorNum4\": \"string\",\r\n        \"processorNum5\": \"string\",\r\n        \"processorNum6\": \"string\",\r\n        \"processorNum7\": \"string\",\r\n        \"processorNum8\": \"string\",\r\n        \"processorNum9\": \"string\",\r\n        \"uic\": \"string\",\r\n        \"nhrnPzn\": \"string\",\r\n        \"nhrnCip\": \"string\",\r\n        \"nhrnCn\": \"string\",\r\n        \"nhrnDrn\": \"string\",\r\n        \"nhrhAim\": 0,\r\n        \"protocol\": \"string\",\r\n        \"dimensions\": 0,\r\n        \"cmtNo\": \"string\",\r\n        \"grai\": \"string\",\r\n        \"giai\": \"string\",\r\n        \"pricePerUnit\": 0,\r\n        \"gctin\": 0,\r\n        \"iban\": \"string\",\r\n        \"prodTime\": 0,\r\n        \"cpid\": \"string\",\r\n        \"cpidSerial\": 0,\r\n        \"version\": \"string\",\r\n        \"gmn\": 0,\r\n        \"gsrnProvider\": 0,\r\n        \"gsrnRecipient\": 0,\r\n        \"srin\": 0,\r\n        \"payRefNo\": 0,\r\n        \"itipContent\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCode\": 0,\r\n        \"128CouponExtCodeNscPlusOfferCodePlusEndOfOfferCode\": 0,\r\n        \"128CouponExtCodeNsc\": 0,\r\n        \"couponCodeId\": \"string\",\r\n        \"points\": 0,\r\n        \"paperlessCouponCodeId\": 0,\r\n        \"productUrl\": \"string\",\r\n        \"internal\": \"string\",\r\n        \"internal1\": \"string\",\r\n        \"internal2\": \"string\",\r\n        \"internal3\": \"string\",\r\n        \"internal4\": \"string\",\r\n        \"internal5\": \"string\",\r\n        \"internal6\": \"string\",\r\n        \"internal7\": \"string\",\r\n        \"internal8\": \"string\",\r\n        \"internal9\": \"string\"\r\n      },\r\n      \"unknown\": 0\r\n    },\r\n    \"epc\": {\r\n      \"version\": \"1.0\",\r\n      \"tag\": {\r\n        \"epcHex\": \"string\",\r\n        \"tagUri\": \"string\",\r\n        \"rawUri\": \"string\",\r\n        \"epcTagScheme\": \"string\"\r\n      },\r\n      \"epc\": {\r\n        \"epcUri\": \"string\",\r\n        \"epcScheme\": \"string\",\r\n        \"epcComponents\": \"string\"\r\n      }\r\n    },\r\n    \"iso\": {\r\n      \"tbd\": \"string\"\r\n    }\r\n  }\r\n}"
+				}
+			]
+		}
+	]
+}
