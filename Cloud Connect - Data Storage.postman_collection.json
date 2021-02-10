@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "3e084f83-e67c-4379-a90d-1067d3efecbc",
-		"name": "Zebra Cloud Data Storage for RFID",
+		"name": "Cloud Connect - Data Storage",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
