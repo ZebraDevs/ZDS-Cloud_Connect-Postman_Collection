@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "52bf35bb-be68-4ce6-84a8-baff44c9ecd3",
-		"name": "RFID Reader Management",
+		"name": "Cloud Connect - Reader Management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -24,6 +24,16 @@
 					"script": {
 						"id": "ae6b4619-61fa-49ee-8afc-9e50ae851cd9",
 						"exec": [
+							"// Set 'BaseUrl' environment var if it's not defined in current environment.",
+							"var baseUrl = pm.globals.get(\"BaseUrl\");",
+							"if(baseUrl === undefined) {",
+							"    baseUrl = pm.environment.get(\"BaseUrl\"); ",
+							"}",
+							"if(baseUrl === undefined) {",
+							"    pm.globals.set(\"BaseUrl\", \"https://api.zebra.com\"); ",
+							"    console.log(\"BaseUrl was updated to: \" + pm.globals.get(\"BaseUrl\"));",
+							"}",
+							"",
 							"// Verify 'client_id' header is set correctly",
 							"var client_id = pm.globals.get(\"Consumer_Key\");",
 							"if(client_id === undefined) {",
@@ -91,7 +101,111 @@
 			"response": []
 		},
 		{
-			"name": "Get Reader",
+			"name": "Get Tenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34a1fdad-745e-4388-a8a0-5ab4860d69f4",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"SavannaTenant\", data[0].AccountNumber);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/mytenant",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"mytenant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device list for Tenant",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd460943-b735-4d67-9fe6-1138b5453ee2",
+						"exec": [
+							"//postman.setEnvironmentVariable(\"SavannaTenant\", \"zebra\");",
+							"//postman.setEnvironmentVariable(\"SavannaTenant\", \"1f1cf9a597a6ce87b13882861815d78c\");",
+							"postman.setEnvironmentVariable(\"SavannaTenant\", \"4f8d7c4390bf65317ec50444c19b060b\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/aos/assets/class/reader?t={{SavannaTenant}}",
+					"host": [
+						"https://api.zebra.com"
+					],
+					"path": [
+						"v2",
+						"aos",
+						"assets",
+						"class",
+						"reader"
+					],
+					"query": [
+						{
+							"key": "t",
+							"value": "{{SavannaTenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registration status",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -124,6 +238,12 @@
 						"key": "apikey",
 						"value": "{{Consumer_Key}}",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -149,12 +269,12 @@
 			"response": []
 		},
 		{
-			"name": "Get Status",
+			"name": "Device Status",
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "fa795f34-13e8-4418-81da-9af0742e2899",
+						"id": "362f1c1b-246a-4164-a69c-ac9abaeb83f8",
 						"exec": [
 							"// Verify the deviceId is set correctly",
 							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
@@ -196,6 +316,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -220,7 +346,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Version",
+			"name": "Firmware version",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -291,7 +417,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Region",
+			"name": "Region setting",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -341,7 +467,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Network",
+			"name": "Network Configuration",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -364,6 +490,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -388,7 +520,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Network",
+			"name": "Network Configuration",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -440,7 +572,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Mode",
+			"name": "Tag Identification Mode",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -484,6 +616,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -508,7 +646,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Mode",
+			"name": "Tag Identification Mode",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -555,14 +693,20 @@
 						"type": "text"
 					},
 					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"mode\": \"inventory\",\r\n    \"antennas\": [1,2], \r\n    \"filter\": { }\t\r\n}\r\n"
+					"raw": "{\r\n    \"antennas\": [\r\n        1\r\n    ],\r\n    \"filter\": {},\r\n    \"mode\": \"simple\",\r\n    \"transmitPower\": 20\r\n}\r\n"
 				},
 				"url": {
 					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/mode",
@@ -581,7 +725,7 @@
 			"response": []
 		},
 		{
-			"name": "Get App-led",
+			"name": "App LED Status",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -623,9 +767,15 @@
 				"method": "GET",
 				"header": [
 					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -649,7 +799,7 @@
 			"response": []
 		},
 		{
-			"name": "Set App-led",
+			"name": "App LED Status",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -698,12 +848,18 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"color\": \"red\",\r\n    \"seconds\": 60,\r\n    \"flash\": true\r\n}\r\n"
+					"raw": "{\r\n    \"color\": \"red\",\r\n    \"seconds\": 120,\r\n    \"flash\": true\r\n}\r\n"
 				},
 				"url": {
 					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/app-led",
@@ -722,7 +878,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Config",
+			"name": "Device Config.xml",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -793,7 +949,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Config",
+			"name": "Device Config.xml",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -866,7 +1022,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Gpo",
+			"name": "GPO",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -915,6 +1071,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -939,7 +1101,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Start",
+			"name": "Start Tag reads",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -988,6 +1150,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -1012,7 +1180,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Stop",
+			"name": "Stop Tag reads",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1061,6 +1229,12 @@
 					{
 						"key": "Authorization",
 						"value": "{{bearer_token_user}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
 						"type": "text"
 					}
 				],
@@ -1085,7 +1259,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Reboot",
+			"name": "Restart Reader",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1158,7 +1332,7 @@
 			"response": []
 		},
 		{
-			"name": "Get OS",
+			"name": "Available Firmware versions",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1202,7 +1376,13 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "{{bearer_token_user}}"
+						"value": "{{bearer_token_user}}",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -1226,7 +1406,7 @@
 			"response": []
 		},
 		{
-			"name": "Set OS",
+			"name": "Update Device Firmware",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1281,7 +1461,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"version\" : \"3.7.17\"\n}"
+					"raw": "{\n\t\"version\" : \"3.7.26\"\n}"
 				},
 				"url": {
 					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/os",
