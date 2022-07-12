@@ -1,0 +1,1176 @@
+{
+	"info": {
+		"_postman_id": "6544aa6b-7c21-47c2-8e71-0303c96fb30a",
+		"name": "Data Services for RFID - Reader Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3824511"
+	},
+	"item": [
+		{
+			"name": "Two-Legged Oauth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"bearer_token\", \"Bearer \" + data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client_id",
+						"value": "{{Consumer_Key}}",
+						"description": "Get your Key at: https://developer.zebra.com/apis"
+					},
+					{
+						"key": "client_secret",
+						"value": "{{Consumer_Secret}}",
+						"description": "Get your Secret at https://developer.zebra.com/apis"
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/oauth/token/access",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"oauth",
+						"token",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"SavannaTenant\", data[0].AccountNumber);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/mytenant",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"mytenant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device list for Tenant",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"SavannaTenant\", \"[put tenant here]\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/aos/assets/class/reader?t={{SavannaTenant}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"aos",
+						"assets",
+						"class",
+						"reader"
+					],
+					"query": [
+						{
+							"key": "t",
+							"value": "{{SavannaTenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registration status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/aos/assets/class/reader/asset/{{deviceId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"aos",
+						"assets",
+						"class",
+						"reader",
+						"asset",
+						"{{deviceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Zebra-Owner",
+						"value": "{{SavannaTenant}}",
+						"description": "optional",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/status",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Firmware version",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/version",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Region setting",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var baseUrl = pm.environment.get(\"deviceId\");",
+							"if(baseUrl === undefined){",
+							"    console.error(\"Please set the 'deviceId' path parameter.\");",
+							"    throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/region",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"region"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Network Configuration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/network",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"network"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Network Configuration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"macAddress\": \"84:24:8D:F0:F4:B5\",\n  \"dhcp\": \"true\",\n  \"dnsAddress\": \"8.8.8.8\",\n  \"subnetMask\": \"255.255.255.0\",\n  \"gatewayAddress\": \"192.168.1.1\",\n  \"ipAddress\": \"192.168.1.10\",\n  \"hostName\": \"[name_name_here]\"\n}"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/network",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"network"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tag Identification Mode",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/mode",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"mode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tag Identification Mode",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"antennas\": [\r\n        1\r\n    ],\r\n    \"filter\": {},\r\n    \"mode\": \"simple\",\r\n    \"transmitPower\": 20\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/mode",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"mode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "App LED Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/app-led",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"app-led"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "App LED Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"red\",\r\n    \"seconds\": 120,\r\n    \"flash\": true\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/app-led",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"app-led"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device Config.xml",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/config",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device Config.xml",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/config",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GPO",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"port\": 1,\r\n\t\"state\": true\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/gpo",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"gpo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start Tag reads",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/start",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stop Tag reads",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/stop",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restart Reader",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/reboot",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"reboot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Available Firmware versions",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{bearer_token}}",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/os",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"os"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Device Firmware",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Verify the deviceId is set correctly",
+							"if (pm.request.url.path[3] === \"{{deviceId}}\") {",
+							"    var deviceIdValue = pm.globals.get(\"deviceId\");",
+							"    if(deviceIdValue === undefined) { ",
+							"        deviceIdValue = pm.environment.get(\"deviceId\");",
+							"    }",
+							"    if(deviceIdValue === undefined) { ",
+							"        throw new Error(\"Please set the 'deviceId' path parameter.\");",
+							"    }",
+							"}",
+							"",
+							"// Verify 'Authorization' header is set correctly",
+							"var authHeader = pm.globals.get(\"bearer_token_user\");",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.environment.get(\"bearer_token_user\"); ",
+							"}",
+							"if(authHeader === undefined) {",
+							"    authHeader = pm.request.headers.get(\"Authorization\");",
+							"}",
+							"if(authHeader === \"{{bearer_token_user}}\") {",
+							"    authHeader = undefined;",
+							"}",
+							"if(authHeader === undefined) { ",
+							"    throw new Error(\"Please set the 'Authorization' Header variable\"); ",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{bearer_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"version\" : \"3.7.26\"\n}"
+				},
+				"url": {
+					"raw": "https://api.zebra.com/v2/devices/readers/{{deviceId}}/os",
+					"protocol": "https",
+					"host": [
+						"api",
+						"zebra",
+						"com"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"{{deviceId}}",
+						"os"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
