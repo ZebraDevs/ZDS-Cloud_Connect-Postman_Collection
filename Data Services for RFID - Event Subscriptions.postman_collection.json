@@ -410,7 +410,7 @@
 					"raw": "{\n            \"userTags\": [],\n            \"changeFields\": [\n                \"decodedTagData\"\n            ],\n            \"deviceIdentifiers\": [],\n    \t\t\"jqFilters\": {\n        \t\t\"decodedTagData\": \".event.data.id != \\\"34187890000000000001fbda\\\"\"\n    \t\t},            \n            \"jqTransform\": {\n                \"decodedTagData\": \"\"\n            },\n            \"name\": \"New subscription name\",\n            \"webhookUrl\": \"[PUT_URL_HERE]\",\n            \"webhookVerb\": \"POST\"\n}"
 				},
 				"url": {
-					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/6Y2NAPIDIE9IEO3J",
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}",
 					"host": [
 						"{{BaseUrl}}"
 					],
@@ -420,7 +420,7 @@
 						"readers",
 						"event",
 						"subscription",
-						"6Y2NAPIDIE9IEO3J"
+						"{{subscriptionId}}"
 					]
 				}
 			},
