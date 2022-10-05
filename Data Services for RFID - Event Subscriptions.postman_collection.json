@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "2bef5a2c-1f89-4eea-8afa-b51d588bf312",
+		"name": "Data Services for RFID - Event Subscriptions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3824511"
+	},
+	"item": [
+		{
+			"name": "Get Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"bearer_token\", \"Bearer \" + jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client_id",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "client_secret",
+						"value": "{{Consumer_Secret}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/v2/oauth/token/access",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"oauth",
+						"token",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Subscription",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.variables.set(\"subscription_url\", \"\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"subscriptionId\", data.subscription.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{SavannaTenant}}"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{bearer_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Test Subscription\",\n\t\"userTags\": [],\n    \"changeFields\": [\n        \"decodedTagData\"\n    ],\n    \"deviceIdentifiers\": [ ],\n\t\"webhookUrl\": \"[PUL_URL_HERE]\",\n\t\"webhookVerb\": \"POST\"\n}"
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Subscriptions",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"SavannaTenant\", \"\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"subscriptionId\", data.subscriptions[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "tenant",
+						"value": "{{SavannaTenant}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscriptions",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Subscription by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"subscriptionId\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{SavannaTenant}}"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription",
+						"{{subscriptionId}}"
+					],
+					"query": [
+						{
+							"key": "subscriptionId",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STOP Subscription by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"subscriptionId\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{SavannaTenant}}"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}/stop",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription",
+						"{{subscriptionId}}",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "START Subscription by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"subscriptionId\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "tenant",
+						"value": "{{SavannaTenant}}",
+						"type": "text"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}/start",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription",
+						"{{subscriptionId}}",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"subscriptionId\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{SavannaTenant}}"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"userTags\": [],\n            \"changeFields\": [\n                \"decodedTagData\"\n            ],\n            \"deviceIdentifiers\": [],\n    \t\t\"jqFilters\": {\n        \t\t\"decodedTagData\": \".event.data.id != \\\"34187890000000000001fbda\\\"\"\n    \t\t},            \n            \"jqTransform\": {\n                \"decodedTagData\": \"\"\n            },\n            \"name\": \"New subscription name\",\n            \"webhookUrl\": \"[PUT_URL_HERE]\",\n            \"webhookVerb\": \"POST\"\n}"
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription",
+						"{{subscriptionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//postman.setEnvironmentVariable(\"subscriptionId\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{SavannaTenant}}"
+					},
+					{
+						"key": "apikey",
+						"value": "{{Consumer_Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{bearer_token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/v2/devices/readers/event/subscription/{{subscriptionId}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"devices",
+						"readers",
+						"event",
+						"subscription",
+						"{{subscriptionId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
